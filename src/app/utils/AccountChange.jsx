@@ -4,7 +4,7 @@ const AccountChange = async (setState) => {
     })
     const selectedAccount = accounts[0];
     console.log(selectedAccount)
-    setState(prevState=>({...prevState,selectedAccount}))
+    setState(prevState=>({...prevState, selectedAccount}))
 }
 
 export default AccountChange;

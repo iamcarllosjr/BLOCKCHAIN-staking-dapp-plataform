@@ -1,14 +1,13 @@
 import { ethers } from "ethers";
 import stakeContractABI from "../ABI/stakeContractABI.json";
 import stakeTokenABI from "../ABI/stakeTokenABI.json";
-import Web3Context from "@/app/context/Web3Context";
 
 const stakingContractAddress = "0xfB528B5905C8f9398fb625Ab4155C567A75cCC9F";
 const stakeTokenAddress = "0xfB528B5905C8f9398fb625Ab4155C567A75cCC9F";
 
 const connectWallet = async () => {
 
-    let [provider, signer, selectedAccount, stakingContractInstance, tokenContractInstance, chainId] = [null,null,null,null,null,null];
+    let [provider, signer, stakingContractInstance, tokenContractInstance, chainId] = [null,null,null,null,null];
 
     if (typeof window != "undefined" && typeof window.ethereum != "undefined"){
         try {

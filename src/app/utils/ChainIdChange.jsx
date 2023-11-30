@@ -2,9 +2,9 @@ const ChainIdChange= async (setState) => {
     let chainIdHex = await window.ethereum.request(
         {method:'eth_chainId'}
     )
-    const chainId = parseInt(chainIdHex,16);
+    const chainId = parseInt(chainIdHex, 16);
     console.log(chainId)
-    setState(prevState=>({...prevState,chainId}))
+    setState(prevState=>({...prevState, chainId}))
 }
 
 export default ChainIdChange;

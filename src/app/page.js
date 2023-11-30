@@ -1,9 +1,12 @@
-import Wallet from "./components/wallet/Wallet"
+import Wallet from "./components/Wallet/Wallet";
+import Navigation from "./components/Navigation/Navigation";
 
 export default function Home() {
   return (
     <>
-       <Wallet />
+       <Wallet>
+        <Navigation />
+       </Wallet>
     </>
   )
 }
