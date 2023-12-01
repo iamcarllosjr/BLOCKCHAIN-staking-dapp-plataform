@@ -6,7 +6,7 @@ const stakingContractAddress = "0x5B41d988F5176CE03403814a6E05Ca72ad1B3461";
 const stakeTokenAddress = "0x0aE4D5BE6257DAFC2797026c26f3C3096d7f0586";
 
 const connectWallet = async () => {
-    let [provider, signer, stakingContractInstance, tokenContractInstance, chainId, selectedAccount] = [null, null, null, null, null, null];
+    let [provider, signer, stakingContractInstance, stakeTokenContractInstance, chainId, selectedAccount] = [null, null, null, null, null, null];
 
     if (typeof window !== "undefined" && typeof window.ethereum !== "undefined") {
         try {
@@ -30,7 +30,7 @@ const connectWallet = async () => {
             signer = await provider.getSigner();
 
             stakingContractInstance = new ethers.Contract(stakingContractAddress, stakeContractABI, signer);
-            tokenContractInstance = new ethers.Contract(stakeTokenAddress, stakeTokenABI, signer);
+            stakeTokenContractInstance = new ethers.Contract(stakeTokenAddress, stakeTokenABI, signer);
 
         } catch (error) {
             console.error(error);
@@ -38,7 +38,7 @@ const connectWallet = async () => {
         }
     }
 
-    return { provider, selectedAccount, stakingContractInstance, tokenContractInstance, chainId };
+    return { provider, selectedAccount, stakingContractInstance, stakeTokenContractInstance, chainId };
 };
 
 export default connectWallet;

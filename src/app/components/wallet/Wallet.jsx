@@ -11,7 +11,7 @@ const Wallet = ({ children }) => {
     provider: null,
     account: null,
     stakingContractInstance: null,
-    tokenContractInstance: null,
+    stakeContractInstance: null,
     chainId: null,
   });
 
@@ -38,7 +38,7 @@ const Wallet = ({ children }) => {
         provider,
         selectedAccount,
         stakingContractInstance,
-        tokenContractInstance,
+        stakeTokenContractInstance,
         chainId,
       } = await connectWallet();
 
@@ -50,7 +50,7 @@ const Wallet = ({ children }) => {
         "Stake Contract:",
         stakingContractInstance,
         "Token Contract:",
-        tokenContractInstance,
+        stakeTokenContractInstance,
         "Chain ID:",
         chainId
       );
@@ -61,7 +61,7 @@ const Wallet = ({ children }) => {
         provider,
         selectedAccount,
         stakingContractInstance,
-        tokenContractInstance,
+        stakeTokenContractInstance,
         chainId,
       });
     } catch (error) {
