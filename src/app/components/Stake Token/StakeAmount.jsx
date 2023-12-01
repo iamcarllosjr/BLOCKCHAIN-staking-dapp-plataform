@@ -1,9 +1,56 @@
-
+"use client";
+import { useState, useRef, useContext } from "react";
+import { ethers } from "ethers";
+import Web3Context from "@/app/Context/Web3Context";
+import Button from "../Button/Button";
 
 const StakeAmount = () => {
-  return (
-    <div>StakeAmount</div>
-  )
-}
+  const { stakingContractInstance } = useContext(Web3Context);
+  const [transactionStatus, setTransactionStatus] = useState("");
 
-export default StakeAmount
+  const stakeAmountRef = useRef();
+
+    const stakeToken = async (event) => {
+        event.preventDefault();
+
+        const amount = stakeAmountRef.current.value.trim();
+        if(isNaN(amount) || amount <=0){
+            console.error("Please insert a valid positive number");
+            return;
+        }
+
+        const amountToStake = ethers.parseEther(amount, 18).toString();
+        try{
+            const transaction = await stakingContractInstance.stake(amountToStake);
+            setTransactionStatus("Transaction is pending...");
+            const receipt = await transaction.wait();
+            if(receipt.status === 1){
+                setTransactionStatus("Staking is Successful");
+                setTimeout(() => {
+                    setTransactionStatus("")
+                }, 5000)
+                stakeAmountRef.current.value = "";
+            } else {
+                setTransactionStatus("Transaction Failed")
+            }
+
+        }catch(error){
+            console.error("Staking Failed", error.message);
+        }
+
+    }
+
+
+  return (
+    <div>
+      <form onSubmit={stakeToken}>
+        <label>Amount To Stake:</label>
+        <input type="text" ref={stakeAmountRef} />
+        <Button onClick={stakeToken} type="submit" label="Stake" />
+      </form>
+      {transactionStatus && <div>{transactionStatus}</div>}
+    </div>
+  );
+};
+
+export default StakeAmount;
