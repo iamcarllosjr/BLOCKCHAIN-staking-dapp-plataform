@@ -7,8 +7,8 @@ const ConnectedNetwork = () => {
 
   if(chainId === null){
     return <p>Not Connected</p>
-  } else if(chainId === 137){
-    return <p>Polygon Network</p>
+  } else if(chainId === 80001){
+    return <p>Connected to Polygon Mumbai</p>
   } else {
     return <p>Network Not Detected</p>
   }
