@@ -2,6 +2,7 @@
 import { useState, useContext } from "react";
 import Web3Context from "@/app/Context/Web3Context";
 import { toast } from 'react-hot-toast';
+import Link from "next/link";
 
 const ClaimReward = () => {
   const { stakingContractInstance } = useContext(Web3Context);
@@ -15,6 +16,9 @@ const ClaimReward = () => {
                 success: "Transaction successful 👌",
                 error: "Transaction failed 🤯"
             });
+            
+            const hash = transaction.hash;
+            toast.success(<Link className="text-zinc-600 bg-purple-40 p-2 tracking-wider" target="_blank" href={`https://mumbai.polygonscan.com/tx/${hash}`}>Transaction Details</Link>);
 
             // const receipt = await transaction.wait();
             // setTransactionStatus("Transaction is pending...");

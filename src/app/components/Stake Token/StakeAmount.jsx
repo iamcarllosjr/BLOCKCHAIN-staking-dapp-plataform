@@ -4,10 +4,12 @@ import { ethers } from "ethers";
 import Web3Context from "@/app/Context/Web3Context";
 import StakingContext from "@/app/Context/StakingContext";
 import { toast } from "react-hot-toast";
+import Link from "next/link";
 
 const StakeAmount = () => {
   const { stakingContractInstance, stakeTokenContractInstance } = useContext(Web3Context);
   const { isReloaded, setIsReloaded } = useContext(StakingContext);
+  const [hash, setHash] = useState("");
   // const [transactionStatus, setTransactionStatus] = useState("");
 
   const stakeAmountRef = useRef();
@@ -38,6 +40,10 @@ const StakeAmount = () => {
         success: "Transaction successful 👌",
         error: "Transaction failed 🤯",
       });
+
+      const hash = transaction.hash;
+      
+      toast.success(<Link className="text-zinc-600 bg-purple-40 p-2 uppercase tracking-wider" target="_blank" href={`https://mumbai.polygonscan.com/tx/${hash}`}>Transaction Details</Link>);
 
       stakeAmountRef.current.value = "";
       setIsReloaded(!isReloaded);

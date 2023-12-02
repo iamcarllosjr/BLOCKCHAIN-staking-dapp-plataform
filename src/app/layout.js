@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={sofia.className}>
-        <Toaster position="top-right " />
+        <Toaster position="bottom-right " />
         {children}
       </body>
     </html>
