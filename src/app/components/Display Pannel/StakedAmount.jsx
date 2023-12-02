@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import Web3Context from "@/app/Context/Web3Context";
 import StakingContext from "@/app/Context/StakingContext";
 import { ethers } from "ethers";
+import { toast } from "react-hot-toast";
 
 const StakedAmount = () => {
     const { stakingContractInstance, selectedAccount } = useContext(Web3Context);
@@ -17,6 +18,7 @@ const StakedAmount = () => {
                 console.log(convertWeiToEther);
                 setStakedAmount(convertWeiToEther);
             } catch (error) {
+                toast.error("Error fetching staked amount");
                 console.error("Error Fetching Data...", error.message)   
             }
 

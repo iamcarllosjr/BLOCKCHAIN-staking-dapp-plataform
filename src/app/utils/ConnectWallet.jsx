@@ -2,8 +2,8 @@ import { ethers } from "ethers";
 import stakeContractABI from "../ABI/stakeContractABI.json";
 import stakeTokenABI from "../ABI/stakeTokenABI.json";
 
-const stakingContractAddress = "0x5B41d988F5176CE03403814a6E05Ca72ad1B3461";
-const stakeTokenAddress = "0x0aE4D5BE6257DAFC2797026c26f3C3096d7f0586";
+const stakingContractAddress = "0xF3DFEf6e553d07eE71f99c23B9A7b0Ad7A24ac28";
+const stakeTokenAddress = "0xf171C4f81628d4286C23bD0141b973aedf076060";
 
 const connectWallet = async () => {
     let [provider, signer, stakingContractInstance, stakeTokenContractInstance, chainId, selectedAccount] = [null, null, null, null, null, null];

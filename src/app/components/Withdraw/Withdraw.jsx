@@ -4,11 +4,13 @@ import { ethers } from "ethers";
 import Web3Context from "@/app/Context/Web3Context";
 import StakingContext from "@/app/Context/StakingContext";
 import Button from "../Button/Button";
+import { toast } from 'react-hot-toast';
+
 
 const WithdrawStakeAmount = () => {
   const { stakingContractInstance } = useContext(Web3Context);
   const { isReloaded, setIsReloaded } = useContext(StakingContext);
-  const [transactionStatus, setTransactionStatus] = useState("");
+  // const [transactionStatus, setTransactionStatus] = useState("");
 
   const withdrawStakeAmountRef = useRef();
 
@@ -24,20 +26,28 @@ const WithdrawStakeAmount = () => {
         const amountToWithdraw = ethers.parseEther(amount, 18).toString();
         try{
             const transaction = await stakingContractInstance.withdrawStakedTokens(amountToWithdraw);
-            setTransactionStatus("Transaction is pending...");
-            const receipt = await transaction.wait();
-            if(receipt.status === 1){
-                setTransactionStatus("Withdraw is Successful");
-                setIsReloaded(!isReloaded);
-                setTimeout(() => {
-                    setTransactionStatus("")
-                }, 5000)
-                withdrawStakeAmountRef.current.value = "";
-            } else {
-                setTransactionStatus("Transaction Failed")
-            }
+            await toast.promise(transaction.wait(), {
+                loading: "Transaction is pending...",
+                success: 'Transaction successful 👌',
+                 error: 'Transaction failed 🤯'
+             });
+
+             withdrawStakeAmountRef.current.value = "";
+             setIsReloaded(!isReloaded);
+
+            // if(receipt.status === 1){
+            //     setTransactionStatus("Withdraw is Successful");
+            //     setIsReloaded(!isReloaded);
+            //     setTimeout(() => {
+            //         setTransactionStatus("")
+            //     }, 5000)
+            //     withdrawStakeAmountRef.current.value = "";
+            // } else {
+            //     setTransactionStatus("Transaction Failed")
+            // }
 
         }catch(error){
+          toast.error("Withdraw Token Failed");
             console.error("Withdraw Failed", error.message);
         }
 
@@ -51,7 +61,7 @@ const WithdrawStakeAmount = () => {
         <input type="text" ref={withdrawStakeAmountRef} />
         <Button onClick={WithdrawstakeToken} type="submit" label="Withdraw Tokens" />
       </form>
-      {transactionStatus && <div>{transactionStatus}</div>}
+      {/* {transactionStatus && <div>{transactionStatus}</div>} */}
     </div>
   );
 };
