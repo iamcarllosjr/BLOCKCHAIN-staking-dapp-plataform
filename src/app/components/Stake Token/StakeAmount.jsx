@@ -2,10 +2,12 @@
 import { useState, useRef, useContext } from "react";
 import { ethers } from "ethers";
 import Web3Context from "@/app/Context/Web3Context";
+import StakingContext from "@/app/Context/StakingContext";
 import Button from "../Button/Button";
 
 const StakeAmount = () => {
   const { stakingContractInstance } = useContext(Web3Context);
+  const { isReloaded, setIsReloaded } = useContext(StakingContext);
   const [transactionStatus, setTransactionStatus] = useState("");
 
   const stakeAmountRef = useRef();
@@ -26,6 +28,7 @@ const StakeAmount = () => {
             const receipt = await transaction.wait();
             if(receipt.status === 1){
                 setTransactionStatus("Staking is Successful");
+                setIsReloaded(!isReloaded);
                 setTimeout(() => {
                     setTransactionStatus("")
                 }, 5000)

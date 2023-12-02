@@ -20,8 +20,11 @@ const EarnedReward = () => {
             };
 
         }
-        stakingContractInstance && fetchEarnedReward();
-
+        
+        const interval = setInterval(() => {
+            stakingContractInstance && fetchEarnedReward();
+        }, 8000);
+        return () => clearInterval(interval);
     }, [stakingContractInstance, selectedAccount]);
 
     return (

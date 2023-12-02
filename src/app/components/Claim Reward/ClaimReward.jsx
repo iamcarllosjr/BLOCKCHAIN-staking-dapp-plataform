@@ -1,6 +1,5 @@
 "use client";
-import { useState, useRef, useContext } from "react";
-import { ethers } from "ethers";
+import { useState, useContext } from "react";
 import Web3Context from "@/app/Context/Web3Context";
 import Button from "../Button/Button";
 
