@@ -24,8 +24,9 @@ const RewardRate = () => {
     }, [stakingContractInstance, selectedAccount]);
 
     return (
-        <div>
-            <p>Reward Rate : {rewardRate} /seconds</p>
+        <div className="flex justify-between">
+            <p>Reward Rate</p>
+            <p>{rewardRate} Token/Sec</p>
         </div>
     )
  

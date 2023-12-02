@@ -15,7 +15,7 @@ const Wallet = ({ children }) => {
     chainId: null,
   });
 
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     window.ethereum.on("accountsChanged", () => AccountChange(setState));
@@ -33,7 +33,7 @@ const Wallet = ({ children }) => {
 
   const handleWallet = async () => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       const {
         provider,
         selectedAccount,
@@ -67,17 +67,20 @@ const Wallet = ({ children }) => {
     } catch (error) {
       console.error("Erro connecting wallet", error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
-
+  
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center gap-3">
       <Web3Context.Provider value={state}>{children}</Web3Context.Provider>
-      {loading && <p>Loading...</p>}
-      <Button onClick={handleWallet} label="Connect Wallet" />
+     <button className="flex justify-center text-white bg-purple-400 p-2 uppercase tracking-wider" onClick={handleWallet}>
+     {!isLoading ? "Connected" : "Connect to Wallet"}
+     </button>
+
     </div>
   );
+
 };
 
 export default Wallet;

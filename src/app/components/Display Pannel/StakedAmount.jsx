@@ -27,8 +27,9 @@ const StakedAmount = () => {
     }, [stakingContractInstance, selectedAccount, isReloaded]);
 
     return (
-        <div>
-            <p>Staked Amount : {stakedAmount}</p>
+        <div className="flex justify-between">
+            <p className="">Staked Amount</p>
+            <p>{stakedAmount}</p>
         </div>
     )
   

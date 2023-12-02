@@ -28,8 +28,9 @@ const EarnedReward = () => {
     }, [stakingContractInstance, selectedAccount]);
 
     return (
-        <div>
-            <p>Earned Reward : {earnedReward}</p>
+        <div className="flex justify-between">
+            <p>Earned Reward</p>
+            <p>{earnedReward}</p>
         </div>
     )
   

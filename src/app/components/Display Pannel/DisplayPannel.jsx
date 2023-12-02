@@ -5,7 +5,7 @@ import StakedAmount from "./StakedAmount";
 
 const DisplayPannel = () => {
     return (
-        <div>
+        <div className="flex flex-col uppercase gap-2 text-white justify-center w-96 mt-5">
             <StakedAmount />
             <RewardRate />
             <EarnedReward />

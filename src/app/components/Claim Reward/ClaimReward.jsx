@@ -1,7 +1,6 @@
 "use client";
 import { useState, useContext } from "react";
 import Web3Context from "@/app/Context/Web3Context";
-import Button from "../Button/Button";
 import { toast } from 'react-hot-toast';
 
 const ClaimReward = () => {
@@ -13,9 +12,10 @@ const ClaimReward = () => {
             const transaction = await stakingContractInstance.getReward();
             await toast.promise(transaction.wait(), {
                 loading: "Transaction is pending...",
-                success: 'Transaction successful 👌',
-                error: 'Transaction failed 🤯'
+                success: "Transaction successful 👌",
+                error: "Transaction failed 🤯"
             });
+
             // const receipt = await transaction.wait();
             // setTransactionStatus("Transaction is pending...");
             // if(receipt.status === 1){
@@ -35,7 +35,7 @@ const ClaimReward = () => {
 
   return (
     <>
-      <Button onClick={claimReward} type="button" label="Clain Reward" />
+      <button className="flex justify-center text-white bg-purple-400 p-2 uppercase tracking-wider" onClick={claimReward}>Claim Reward</button>
       {/* {transactionStatus && <div>{transactionStatus}</div>} */}
     </>
   );

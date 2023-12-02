@@ -3,11 +3,10 @@ import { useState, useRef, useContext } from "react";
 import { ethers } from "ethers";
 import Web3Context from "@/app/Context/Web3Context";
 import StakingContext from "@/app/Context/StakingContext";
-import Button from "../Button/Button";
 import { toast } from "react-hot-toast";
 
 const StakeAmount = () => {
-  const { stakingContractInstance } = useContext(Web3Context);
+  const { stakingContractInstance, stakeTokenContractInstance } = useContext(Web3Context);
   const { isReloaded, setIsReloaded } = useContext(StakingContext);
   // const [transactionStatus, setTransactionStatus] = useState("");
 
@@ -24,6 +23,14 @@ const StakeAmount = () => {
 
     const amountToStake = ethers.parseEther(amount, 18).toString();
     try {
+      const approve = await stakeTokenContractInstance.approve(stakingContractInstance.target, amountToStake);
+      
+      await toast.promise(approve.wait(), {
+        loading: "Approving transaction...",
+        success: "Transaction approved successful 👌",
+        error: "Transaction failed 🤯",
+      });
+
       const transaction = await stakingContractInstance.stake(amountToStake);
 
       await toast.promise(transaction.wait(), {
@@ -49,11 +56,11 @@ const StakeAmount = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={stakeToken}>
-        <label>Amount To Stake:</label>
-        <input type="text" ref={stakeAmountRef} />
-        <Button onClick={stakeToken} type="submit" label="Stake" />
+    <div className="flex">
+      <form onSubmit={stakeToken} className="flex flex-col justify-center gap-5 bg-zinc-600 rounded-md uppercase p-2 w-full">
+        <label className="text-white">Amount To Stake</label>
+        <input className="rounded-md w-full text-zinc-600 text-center outline-none font-bold p-3 text-3xl" type="text" placeholder="0" ref={stakeAmountRef} />
+        <button className="flex w-full justify-center text-zinc-600 bg-purple-400 p-3 uppercase tracking-wider" onClick={stakeToken}>Stake</button>
       </form>
       {/* {transactionStatus && <div>{transactionStatus}</div>} */}
     </div>

@@ -2,7 +2,6 @@
 import { useState, useRef, useContext } from "react";
 import { ethers } from "ethers";
 import Web3Context from "@/app/Context/Web3Context";
-import Button from "../Button/Button";
 import { toast } from "react-hot-toast";
 
 const TokenApprove = () => {
@@ -44,14 +43,14 @@ const TokenApprove = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={approveToken}>
-        <label>Token Approval:</label>
-        <input type="text" ref={approvedTokenRef} />
-        <Button onClick={approveToken} type="submit" label="Token Approval" />
+    <>
+      <form onSubmit={approveToken} className="flex flex-col items-start justify-center gap-5 bg-zinc-600 rounded-md uppercase p-2 w-full">
+        <label className="text-white">Token Approve</label>
+        <input className="flex rounded-md w-full text-zinc-600 text-center outline-none font-bold p-3 text-3xl" type="text" ref={approvedTokenRef} />
+        <button className="flex w-full justify-center text-zinc-600 bg-purple-400 p-3 uppercase tracking-wider" onClick={approveToken}>Approve</button>
       </form>
       {/* {transactionStatus && <div>{transactionStatus}</div>} */}
-    </div>
+    </>
   );
 };
 
