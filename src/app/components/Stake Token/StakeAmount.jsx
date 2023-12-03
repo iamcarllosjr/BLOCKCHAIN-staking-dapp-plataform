@@ -43,7 +43,7 @@ const StakeAmount = () => {
 
       const hash = transaction.hash;
       
-      toast.success(<Link className="text-zinc-600 bg-purple-40 p-2 uppercase tracking-wider" target="_blank" href={`https://mumbai.polygonscan.com/tx/${hash}`}>Transaction Details</Link>);
+      toast.success(<Link className="text-zinc-600 bg-purple-40 p-2 tracking-wider" target="_blank" href={`https://mumbai.polygonscan.com/tx/${hash}`}>Transaction Details</Link>);
 
       stakeAmountRef.current.value = "";
       setIsReloaded(!isReloaded);
