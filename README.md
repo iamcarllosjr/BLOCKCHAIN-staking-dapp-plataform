@@ -1,4 +1,5 @@
 # This is a Staking DApp. Smart Contract and Integration with Frontend
+![StakingDApp Gif](https://github.com/iamcarllosjr/BLOCKCHAIN-staking-dapp-plataform/assets/104648930/d0eff32b-a404-4e20-b23c-01e5acd77c43)
 
 ## Overview of Staking DApp
 
