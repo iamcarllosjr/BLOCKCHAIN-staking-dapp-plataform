@@ -6,7 +6,7 @@ import Link from "next/link";
 import { isError } from "ethers";
 
 const ClaimReward = () => {
-  const { stakingContractInstance } = useContext(Web3Context);
+  const { stakingContractInstance, selectedAccount } = useContext(Web3Context);
   // const [transactionStatus, setTransactionStatus] = useState("");
 
     const claimReward = async () => {
@@ -41,7 +41,7 @@ const ClaimReward = () => {
 
   return (
     <>
-      <button className="flex justify-center text-white bg-purple-400 p-2 uppercase tracking-wider" onClick={claimReward}>Claim Reward</button>
+      <button className="flex justify-center text-white bg-purple-400 p-2 uppercase tracking-wider" onClick={claimReward}>Claim Rewards</button>
       {/* {transactionStatus && <div>{transactionStatus}</div>} */}
     </>
   );
