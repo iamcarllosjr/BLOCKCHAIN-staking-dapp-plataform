@@ -1,6 +1,6 @@
 "use client";
 import { useState, useRef, useContext } from "react";
-import { ethers } from "ethers";
+import { ethers, isError } from "ethers";
 import Web3Context from "@/app/Context/Web3Context";
 import StakingContext from "@/app/Context/StakingContext";
 import { toast } from 'react-hot-toast';
@@ -18,7 +18,7 @@ const WithdrawStakeAmount = () => {
 
         const amount = withdrawStakeAmountRef.current.value.trim();
         if(isNaN(amount) || amount <=0){
-            console.error("Please insert a valid positive number");
+            toast.error("No Tokens to Withdraw");
             return;
         }
 
@@ -28,7 +28,7 @@ const WithdrawStakeAmount = () => {
             await toast.promise(transaction.wait(), {
                 loading: "Transaction is pending...",
                 success: 'Transaction successful 👌',
-                 error: 'Transaction failed 🤯'
+                error: 'Transaction failed 🤯'
              });
 
              withdrawStakeAmountRef.current.value = "";
@@ -46,10 +46,11 @@ const WithdrawStakeAmount = () => {
             // }
 
         }catch(error){
-          toast.error("Withdraw Token Failed");
+          if(isError(error, "CALL_EXCEPTION")){
+            toast.error(error.reason);
             console.error("Withdraw Failed", error.message);
         }
-
+      }
     }
 
 

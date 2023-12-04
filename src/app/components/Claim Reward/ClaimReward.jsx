@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import Web3Context from "@/app/Context/Web3Context";
 import { toast } from 'react-hot-toast';
 import Link from "next/link";
+import { isError } from "ethers";
 
 const ClaimReward = () => {
   const { stakingContractInstance } = useContext(Web3Context);
@@ -30,10 +31,11 @@ const ClaimReward = () => {
             // }
 
         }catch(error){
-          toast.error("Claim Reward Failed");
+          if(isError(error, "CALL_EXCEPTION")){
+            toast.error(error.reason);
+          };
             console.error("Claim Reward Failed", error.message);
-        }
-
+        };
     }
 
 

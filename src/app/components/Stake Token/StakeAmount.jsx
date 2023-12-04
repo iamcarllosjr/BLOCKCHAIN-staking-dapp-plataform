@@ -19,7 +19,7 @@ const StakeAmount = () => {
 
     const amount = stakeAmountRef.current.value.trim();
     if (isNaN(amount) || amount <= 0) {
-      console.error("Please insert a valid positive number");
+      toast.error("No Tokens to Stake");
       return;
     }
 
