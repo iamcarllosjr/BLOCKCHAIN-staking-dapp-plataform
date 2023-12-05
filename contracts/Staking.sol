@@ -11,7 +11,9 @@ contract Staking is ReentrancyGuard{
   IERC20 public s_stakingToken;
   IERC20 public s_rewardToken;
 
-  uint public constant REWARD_RATE=1e18;
+  uint public constant REWARD_RATE=20;
+  uint public TOKENS_DECIMALS = 18;
+  uint public DURATION = 120; //2 minutos em segundos
   uint private totalStakedTokens;
   uint public rewardPerTokenStored;
   uint public lastUpdateTime;
@@ -33,13 +35,21 @@ contract Staking is ReentrancyGuard{
     if(totalStakedTokens==0){
         return rewardPerTokenStored;
     }
-    uint totalTime = block.timestamp.sub(lastUpdateTime);
-    uint totalRewards = REWARD_RATE.mul(totalTime); 
-    return rewardPerTokenStored.add(totalRewards.mul(1e18).div(totalStakedTokens));
+    uint currentTime = block.timestamp;
+    uint elapsedTime = currentTime.sub(lastUpdateTime);
+
+    // Convertendo a taxa de recompensa para tokens por segundo
+    uint rewardRatePerSecond = REWARD_RATE.mul(10**TOKENS_DECIMALS).div(DURATION); 
+    // Calculando a recompensa total durante o tempo decorrido
+    uint totalRewards = rewardRatePerSecond.mul(elapsedTime);
+    // Calculando o novo valor de recompensa por token
+    uint newRewardPerToken = rewardPerTokenStored.add(totalRewards.mul(10**TOKENS_DECIMALS).div(totalStakedTokens));
+    return newRewardPerToken;
   }
 
+
   function earned(address account) public view returns(uint){
-    return stakedBalance[account].mul(rewardPerToken().sub(userRewardPerTokenPaid[account])).div(1e18).add(rewards[account]);
+    return stakedBalance[account].mul(rewardPerToken().sub(userRewardPerTokenPaid[account])).div(10**TOKENS_DECIMALS).add(rewards[account]);
   }
 
   modifier updateReward(address account){
@@ -63,7 +73,7 @@ contract Staking is ReentrancyGuard{
     require(stakedBalance[msg.sender]>=amount,"Staked amount not enough");
     totalStakedTokens=totalStakedTokens.sub(amount);
     stakedBalance[msg.sender]=stakedBalance[msg.sender].sub(amount);
-    emit Withdrawn(msg.sender, amount);(msg.sender,amount);
+    emit Withdrawn(msg.sender, amount);
     bool success = s_stakingToken.transfer(msg.sender,amount);
     require(success,"Transfer Failed");
   }
