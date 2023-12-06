@@ -11,10 +11,11 @@ const EarnedReward = () => {
         const fetchEarnedReward = async () => {
             try {
                 const earnedTokenReward = await stakingContractInstance.earned(selectedAccount);  
-                const convertWeiToEther = ethers.formatUnits(earnedTokenReward.toString(), 18);
-                const fixedValueReward = parseFloat(convertWeiToEther).toFixed(2)
-                console.log(fixedValueReward);
-                setEarnedReward(fixedValueReward);
+                const convertToString = ethers.formatUnits(earnedTokenReward);
+                const roundedFixed = parseFloat(convertToString).toFixed(2)
+                
+                console.log(roundedFixed);
+                setEarnedReward(roundedFixed);
             } catch (error) {
                 console.error("Error Fetching Data...", error.message)   
             };

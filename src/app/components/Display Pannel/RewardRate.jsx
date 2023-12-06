@@ -11,9 +11,11 @@ const RewardRate = () => {
         const fetchRewardRate = async () => {
             try {
                 const rewardTokenRate = await stakingContractInstance.REWARD_RATE();  
-                const convertWeiToEther = ethers.formatUnits(rewardTokenRate.toString(), 18);
-                console.log(convertWeiToEther);
-                setRewardRate(convertWeiToEther);
+                const get = ethers.getNumber(rewardTokenRate);
+                
+              
+                console.log(get);
+                setRewardRate(get);
             } catch (error) {
                 console.error("Error Fetching Data...", error.message)   
             };
@@ -26,7 +28,7 @@ const RewardRate = () => {
     return (
         <div className="flex justify-between">
             <p>Reward Rate</p>
-            <p>{rewardRate} Token/Sec</p>
+            <p>{rewardRate} Tokens /Two Min</p>
         </div>
     )
  
